@@ -43,16 +43,16 @@ module.exports = (event) => {
         // the text we received.
         switch (messageText) {
             case 'image':
-                sendImageMessage(senderID);
+                //sendImageMessage(senderID);
                 break;
             case 'button':
-                sendButtonMessage(senderID);
+                //sendButtonMessage(senderID);
                 break;
             case 'generic':
-                sendGenericMessage(senderID);
+                //sendGenericMessage(senderID);
                 break;
             case 'receipt':
-                sendReceiptMessage(senderID);
+                //sendReceiptMessage(senderID);
                 break;
             default:
                 newMessage = messageText + "~? マジかぁ超ウケルwww";

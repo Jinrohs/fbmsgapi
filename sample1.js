@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/v1/webhook', (req, res) => {
+    console.log("access");
     var data = req.body;
     if(data.object != 'page') {
         console.log("not page");
