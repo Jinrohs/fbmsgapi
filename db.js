@@ -30,8 +30,8 @@ exports.saveUser = (userId, smType, timestamp) => {
         id: userId,
         type: smType,
         timestamp,
-        matched: true,
-        matchedId: '1259907210715796',
+        matched: false,
+        matchedId: null,
     };
 
     return new Promise((resolve, reject) => {
