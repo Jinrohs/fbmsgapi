@@ -13,11 +13,13 @@ module.exports = (senderId) => {
         .then((user) => {
             send(senderId, { text: '退出します' });
             send(senderId, { text: 'ご利用ありがとうございました！' });
+            send(senderId, { text: '--------------' });
             greeting(senderId);
 
             if (user.matchedId) {
                 send(user.matchedId, { text: '相手が退出しました' });
-                send(user.matchedId, { text: '相手が退出しました' });
+                send(user.matchedId, { text: 'ご利用ありがとうございました！' });
+                send(user.matchedId, { text: '--------------' });
                 greeting(user.matchedId);
             }
         });
