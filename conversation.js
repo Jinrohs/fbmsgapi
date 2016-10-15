@@ -15,6 +15,11 @@ module.exports = (event) => {
             return;
         }
 
+        if(!user.matched) {
+            send(senderID, { text: "[運営]: マッチングまでしばらくお待ちください。" });
+            return;
+        }
+
         // ここに画像生成処理を書く
 
         send(user.matchedId, { text: messageText });
