@@ -51,12 +51,12 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
                 }
 
                 if (messagingEvent.postback.payload === 'REGISTER_AS_M') {
-                    register('M', messagingEvent);
+                    register.mUser(messagingEvent);
                     return;
                 }
 
                 if (messagingEvent.postback.payload === 'REGISTER_AS_S') {
-                    register('S', messagingEvent);
+                    register.sUser(messagingEvent);
                     return;
                 }
             }

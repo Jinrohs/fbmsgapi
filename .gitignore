@@ -4,3 +4,4 @@ page_access_token
 node_modules/
 builds/
 db/
+*.log

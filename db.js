@@ -1,19 +1,59 @@
+'use strict';
 
-var getUser = (id) => {
-    return {
-        id: id,
-        type: 'S',
-        timestamp: Date.now(),
+const DataStore = require('nedb');
+
+const userStore = new DataStore({ filename: './users', autoload: true });
+
+userStore.loadDatabase((error) => {
+    if (error) console.log(error);
+});
+
+exports.getUser = (id) => {
+    console.log('GET USER');
+
+    return new Promise((resolve, reject) => {
+        userStore.find({ id }, (error, user) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(user);
+        });
+    });
+};
+
+exports.seveUser = (userId, smType, timestamp) => {
+    console.log('SAVE USER');
+
+    const newUser = {
+        id: userId,
+        type: smType,
+        timestamp,
         matched: true,
-        matchedUserId: "1259907210715796"
+        matchedUserId: '1259907210715796',
     };
+
+    return new Promise((resolve, reject) => {
+        userStore.insert(newUser, (error, savedUser) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(savedUser);
+        });
+    });
 };
 
-var saveUser = (userId, smType, timestamp) => {
+exports.getUnmatchedUser = (smType) => {
+    console.log('FIND USER:', smType);
 
-};
-
-module.exports = {
-    getUser: getUser,
-    saveUser: saveUser
+    return new Promise((resolve, reject) => {
+        userStore.find({ matched: false, type: smType }).sort({ timestamp: 1 }).limit(1).exec((error, savedUser) => {
+            if (error) {
+                reject();
+                return;
+            }
+            resolve(savedUser);
+        });
+    });
 };
