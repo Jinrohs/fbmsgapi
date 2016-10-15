@@ -12,7 +12,7 @@ exports.getUser = (id) => {
     console.log('GET USER');
 
     return new Promise((resolve, reject) => {
-        userStore.find({ id }, (error, user) => {
+        userStore.find({ _id: id }, (error, user) => {
             if (error) {
                 reject(error);
                 return;
@@ -46,11 +46,11 @@ exports.saveUser = (userId, smType, timestamp) => {
     });
 };
 
-exports.getUnmatchedUser = (smType) => {
+exports.getUnmatchedUser = (selfId, smType) => {
     console.log('FIND USER:', smType);
 
     return new Promise((resolve, reject) => {
-        userStore.find({ matched: false, type: smType }).sort({ timestamp: 1 }).limit(1).exec((error, savedUser) => {
+        userStore.find({ id: { $ne: selfId }, matched: false, type: smType }).sort({ timestamp: 1 }).limit(1).exec((error, savedUser) => {
             if (error) {
                 reject(error);
                 return;

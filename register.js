@@ -7,7 +7,7 @@ exports.mUser = (event) => {
     const senderId = event.sender.id;
 
     db.saveUser(senderId, 'M', event.timestamp)
-        .then(() => db.getUnmatchedUser('S'))
+        .then(() => db.getUnmatchedUser(senderId, 'S'))
         .then((savedUser) => {
             if (savedUser.matched) {
                 const text = '罵倒されたいユーザーが見つかりました';
@@ -27,7 +27,7 @@ exports.sUser = (event) => {
     const senderId = event.sender.id;
 
     db.saveUser(senderId, 'S', event.timestamp)
-        .then(() => db.getUnmatchedUser('M'))
+        .then(() => db.getUnmatchedUser(senderId, 'M'))
         .then((savedUser) => {
             if (savedUser.matched) {
                 const text = '罵倒したいユーザーが見つかりました';
