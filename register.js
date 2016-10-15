@@ -6,7 +6,7 @@ const send = require('./send');
 exports.mUser = (event) => {
     const senderId = event.sender.id;
 
-    db.saveUser(senderId, 'M', event.timestamp)
+    db.savedUser(senderId, 'M', event.timestamp)
         .then(() => db.getUnmatchedUser('S'))
         .then((savedUser) => {
             if (savedUser.matched) {
@@ -26,7 +26,7 @@ exports.mUser = (event) => {
 exports.sUser = (event) => {
     const senderId = event.sender.id;
 
-    db.saveUser(senderId, 'S', event.timestamp)
+    db.savedUser(senderId, 'S', event.timestamp)
         .then(() => db.getUnmatchedUser('M'))
         .then((savedUser) => {
             if (savedUser.matched) {

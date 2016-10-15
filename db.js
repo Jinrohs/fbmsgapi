@@ -22,7 +22,7 @@ exports.getUser = (id) => {
     });
 };
 
-exports.seveUser = (userId, smType, timestamp) => {
+exports.saveUser = (userId, smType, timestamp) => {
     console.log('SAVE USER');
 
     const newUser = {
