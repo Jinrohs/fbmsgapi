@@ -30,7 +30,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             }
 
             if (messagingEvent.message) {
-                console.log('MESSAGE EVENT:', messagingEvent);
+                console.log('MESSAGE:', messagingEvent);
                 receivedMessage(messagingEvent);
                 return;
             }
@@ -40,7 +40,8 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             }
 
             if (messagingEvent.postback) {
-                if(messagingEvent.postback.payload === "NEW_THREAD") {
+                console.log('POSTBACK:', messagingEvent);
+                if (messagingEvent.postback.payload === 'NEW_THREAD') {
                     greeting(messagingEvent);
                 }
                 return;

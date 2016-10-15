@@ -9,7 +9,7 @@ module.exports = (recipientId, message, callback) => {
         method: 'POST',
         json: {
             recipient: { id: recipientId },
-            message: message,
+            message,
         },
     }, (err, response, body) => {
         if (typeof callback === 'function') {

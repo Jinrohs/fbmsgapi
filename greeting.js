@@ -6,29 +6,29 @@ const send = require('./send');
 
 const message = {
     attachment: {
-        type: "template",
+        type: 'template',
         payload: {
-            template_type: "button",
-            text: "あなたのタイプはどちらですか？",
+            template_type: 'button',
+            text: 'あなたのタイプはどちらですか？',
             buttons: [
                 {
-                    "type": "ｐｏｓｔｂａｃｋ",
-                    "title": "罵倒したい",
-                    "payload": "REGISTER_AS_M"
+                    type: 'ｐｏｓｔｂａｃｋ',
+                    title: '罵倒したい',
+                    payload: 'REGISTER_AS_M',
                 },
                 {
-                    "type": "postback",
-                    "title": "罵倒されたい",
-                    "payload": "REGISTER_AS_M"
-                }
-            ]
-        }
-    }
+                    type: 'postback',
+                    title: '罵倒されたい',
+                    payload: 'REGISTER_AS_M',
+                },
+            ],
+        },
+    },
 };
 
 const callback = (err, response, body) => {
-    if(err) {
-        console.log("err: " + err + "response" + response + "body: " + body);
+    if (err) {
+        console.log(`err: ${err}response${response}body: ${body}`);
     }
 };
 
