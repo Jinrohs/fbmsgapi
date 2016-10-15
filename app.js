@@ -8,7 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const greeting = require('./greeting');
 const register = require('./register');
-const conversation = require('./conversation');
+const communication = require('./communication');
 
 const app = express();
 
@@ -35,7 +35,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
                 }
 
                 console.log('MESSAGE:', messagingEvent);
-                conversation(messagingEvent);
+                communication(messagingEvent);
                 return;
             }
 
