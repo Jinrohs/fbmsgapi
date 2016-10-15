@@ -1,40 +1,41 @@
+'use strict';
+
 const request = require('request');
 const pageAccessToken = require('./page-access-token');
 
-var callSendApi = (messageData, callback) => {
+const callSendApi = (messageData, callback) => {
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: pageAccessToken },
         method: 'POST',
-        json: messageData
+        json: messageData,
     }, (err, response, body) => {
-        if(callback != undefined) {
+        if (callback !== undefined) {
             callback(err, response, body);
         }
-    } );
+    });
 };
 
-var sendTextMessage = (recipientId, messageText) => {
-    let messageData = {
-        recipient: {id : recipientId},
-        message: { text: messageText }
+const sendTextMessage = (recipientId, messageText) => {
+    const messageData = {
+        recipient: { id: recipientId },
+        message: { text: messageText },
     };
     callSendApi(messageData);
 };
 
 module.exports = (event) => {
-    var senderID = event.sender.id;
-    var recipientID = event.recipient.id;
-    var timeOfMessage = event.timestamp;
-    var message = event.message;
+    const senderID = event.sender.id;
+    const recipientID = event.recipient.id;
+    const timeOfMessage = event.timestamp;
+    const message = event.message;
 
-    console.log("メッセージ受信 ユーザ: %d, ページ %d, 時間%d",
-        senderID, recipientID, timeOfMessage);
+    console.log(`メッセージ受信 ユーザ: ${senderID}, ページ ${recipientID}, 時間${timeOfMessage}`);
     console.log(JSON.stringify(message));
 
-    var messageId = message.mid;
-    var messageText = message.text;
-    var messageAttachments = message.attachments;
+    // const messageId = message.mid;
+    const messageText = message.text;
+    const messageAttachments = message.attachments;
 
     if (messageText) {
         console.log(message);
@@ -43,22 +44,20 @@ module.exports = (event) => {
         // the text we received.
         switch (messageText) {
             case 'image':
-                //sendImageMessage(senderID);
                 break;
             case 'button':
-                //sendButtonMessage(senderID);
                 break;
             case 'generic':
-                //sendGenericMessage(senderID);
                 break;
             case 'receipt':
-                //sendReceiptMessage(senderID);
                 break;
-            default:
-                newMessage = messageText + "~? マジかぁ超ウケルwww";
+            default: {
+                const newMessage = `${messageText}~? マジかぁ超ウケルwww`;
                 sendTextMessage(senderID, newMessage);
+                break;
+            }
         }
     } else if (messageAttachments) {
-        sendTextMessage(senderID, "Message with attachment received");
+        sendTextMessage(`${senderID}Message with attachment received`);
     }
 };
