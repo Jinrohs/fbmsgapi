@@ -8,7 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const greeting = require('./greeting');
 const register = require('./register');
-const communication = require('./communication');
+const conversation = require('./conversation');
 
 const app = express();
 
@@ -31,7 +31,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
             if (messagingEvent.message) {
                 console.log('MESSAGE:', messagingEvent);
-                communication(messagingEvent);
+                conversatoin(messagingEvent);
                 return;
             }
 
@@ -42,7 +42,6 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             if (messagingEvent.postback) {
                 console.log('POSTBACK:', messagingEvent);
                 if (messagingEvent.postback.payload === 'NEW_THREAD') {
-                    console.log('enter!!');
                     greeting(messagingEvent);
                     return;
                 }
