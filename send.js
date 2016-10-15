@@ -12,6 +12,14 @@ module.exports = (senderId, message, callback) => {
             message: message,
         },
     }, (err, response, body) => {
+        if(err) {
+            console.log(`err: ${err}`);
+        }
+
+        if(response.statusCode != 200) {
+            console.log(`err: ${err}, response${JSON.stringify(esponse)}, body: ${JSON.stringify(body)}`);
+        }
+
         if (typeof callback === 'function') {
             callback(err, response, body);
         }

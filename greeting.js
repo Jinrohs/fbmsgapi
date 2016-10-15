@@ -26,12 +26,6 @@ const message = {
     },
 };
 
-const callback = (err, response, body) => {
-    if (err) {
-        console.log(`err: ${err}, response${response}, body: ${body}`);
-    }
-};
-
 module.exports = (event) => {
-    send(event.sender.id, message, callback);
+    send(event.sender.id, message);
 };
