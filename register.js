@@ -8,7 +8,7 @@ const db = require('./db');
 const send = require('./send');
 
 exports.mUser = (senderId, timestamp) => {
-    send(senderId, { text: 'かしこまりました、「罵倒されたい」のですね' });
+    send(senderId, { text: 'かしこまりました、罵倒されたいのですね...' });
 
     db.saveUser(senderId, 'M', timestamp)
         .then(() => db.getUnmatchedUser(senderId, 'S'))
@@ -36,7 +36,7 @@ exports.mUser = (senderId, timestamp) => {
 };
 
 exports.sUser = (senderId, timestamp) => {
-    send(senderId, { text: 'かしこまりました、「罵倒したい」のですね' });
+    send(senderId, { text: 'なるほど、あなたはどSなのですね...' });
 
     db.saveUser(senderId, 'S', timestamp)
         .then(() => db.getUnmatchedUser(senderId, 'M'))
