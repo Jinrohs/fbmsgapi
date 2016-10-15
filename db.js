@@ -9,7 +9,7 @@ var getUser = (id) => {
     };
 };
 
-var seveUser = (userId, smType, timestamp) => {
+var saveUser = (userId, smType, timestamp) => {
 
 };
 

@@ -14,5 +14,5 @@ module.exports = (event) => {
 
     // ここに画像生成処理を書く
 
-    send(matchedId, {message: { messageText} });
+    send(matchedId, {message: {message: messageText} });
 };

@@ -31,7 +31,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
             if (messagingEvent.message) {
                 console.log('MESSAGE:', messagingEvent);
-                conversatoin(messagingEvent);
+                conversation(messagingEvent);
                 return;
             }
 
