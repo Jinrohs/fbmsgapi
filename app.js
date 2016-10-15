@@ -6,11 +6,11 @@ const _ = require('lodash');
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+const greeting = require('./greeting');
 
 const app = express();
 const receivedMessage = require('./sample1-recieved-message');
 
-const greeting = greeting();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
