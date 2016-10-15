@@ -32,17 +32,17 @@ module.exports = (event) => {
 
     if (message.is_echo) {
         console.log('エコーがきました');
+        return;
     }
 
     console.log(`メッセージ受信 ユーザ: ${senderID}, ページ ${recipientID}, 時間${timeOfMessage}`);
-    // console.log(JSON.stringify(message));
-    // const messageId = message.mid;
+
     const messageText = message.text || '';
     const messageAttachments = message.attachments;
 
     if (!messageText && messageAttachments) {
         console.log('ATTACHMENTS:', messageAttachments);
-        sendTextMessage(`${senderID}Message with attachment received`);
+        sendTextMessage(`rec: ${recipientID} から画像が来ました`);
         return;
     }
 
