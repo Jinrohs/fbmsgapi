@@ -4,7 +4,7 @@ const request = require('request');
 
 const pageAccessToken = fs.readFileSync('./page_access_token', 'utf-8');
 
-module.exports = (senderId, message, callback) => {
+module.exports = (senderId, message) => new Promise((resolve, reject) => {
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: pageAccessToken },
@@ -18,10 +18,10 @@ module.exports = (senderId, message, callback) => {
             console.log(`SEND ERROR: ${error}`);
             console.log(`SEND RESPONCE: ${JSON.stringify(response)}`);
             console.log(`SEND BODY: ${JSON.stringify(body)}`);
+            reject(error);
+            return;
         }
 
-        if (typeof callback === 'function') {
-            callback(error, response, body);
-        }
+        resolve(response, body);
     });
-};
+});

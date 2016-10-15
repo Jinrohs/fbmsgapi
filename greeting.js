@@ -6,7 +6,7 @@
 
 const send = require('./send');
 
-const message = {
+const greetingMessage = {
     attachment: {
         type: 'template',
         payload: {
@@ -29,6 +29,6 @@ const message = {
 };
 
 module.exports = (event) => {
-    send(event.sender.id, message);
-    send(event.sender.id, { text: 'あなたの欲望のまま、会話を初めてみましょう' });
+    send(event.sender.id, greetingMessage)
+        .then(send(event.sender.id, { text: 'あなたの欲望のまま、会話を初めてみましょう' }));
 };
