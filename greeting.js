@@ -28,10 +28,11 @@ const message = {
 
 const callback = (err, response, body) => {
     if (err) {
-        console.log(`err: ${err}response${response}body: ${body}`);
+        console.log(`err: ${err}, response${response}, body: ${body}`);
     }
 };
 
 module.exports = (event) => {
-    send(event.sender.id, message, callback);
+    const recipientID = event.recipient.id;
+    send(recipientID, message, callback);
 };

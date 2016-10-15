@@ -7,10 +7,10 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const greeting = require('./greeting');
+const register = require('./register');
+const communication = require('./communication');
 
 const app = express();
-const receivedMessage = require('./sample1-recieved-message');
-
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
             if (messagingEvent.message) {
                 console.log('MESSAGE:', messagingEvent);
-                receivedMessage(messagingEvent);
+                communication(messagingEvent);
                 return;
             }
 
@@ -44,8 +44,18 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
                 if (messagingEvent.postback.payload === 'NEW_THREAD') {
                     console.log('enter!!');
                     greeting(messagingEvent);
+                    return;
                 }
-                return;
+
+                if (messagingEvent.postback.payload === 'REGISTER_AS_M') {
+                    register('M', messagingEvent);
+                    return;
+                }
+
+                if (messagingEvent.postback.payload === 'REGISTER_AS_S') {
+                    register('S', messagingEvent);
+                    return;
+                }
             }
         });
     });
