@@ -50,7 +50,7 @@ exports.getUnmatchedUser = (smType) => {
     return new Promise((resolve, reject) => {
         userStore.find({ matched: false, type: smType }).sort({ timestamp: 1 }).limit(1).exec((error, savedUser) => {
             if (error) {
-                reject();
+                reject(error);
                 return;
             }
             resolve(savedUser);
