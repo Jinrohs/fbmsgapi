@@ -6,9 +6,11 @@ const _ = require('lodash');
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const greeting = require('./greeting');
 const register = require('./register');
 const conversation = require('./conversation');
+const exit = require('./exit');
 
 const app = express();
 
@@ -20,9 +22,17 @@ const routeMessage = (event) => {
         if (event.message.is_echo) {
             return;
         }
+
         console.log('==========================');
         console.log('MESSAGE:', `senderId: ${event.sender.id}, text: ${event.message.text}`);
-        conversation(event);
+
+        if (event.message.text === '退出') {
+            console.log('EXIT');
+            exit(event.sender.id);
+            return;
+        }
+
+        conversation(event.sender.id, event.message);
         return;
     }
 
@@ -34,19 +44,19 @@ const routeMessage = (event) => {
         console.log('==========================');
         if (event.postback.payload === 'NEW_THREAD') {
             console.log('GREETING:', event);
-            greeting(event);
+            greeting(event.sender.id);
             return;
         }
 
         if (event.postback.payload === 'REGISTER_AS_M') {
             console.log('REGISTER:', event);
-            register.mUser(event);
+            register.mUser(event.sender.id, event.timestamp);
             return;
         }
 
         if (event.postback.payload === 'REGISTER_AS_S') {
             console.log('REGISTER:', event);
-            register.sUser(event);
+            register.sUser(event.sender.id, event.timestamp);
             return;
         }
     }

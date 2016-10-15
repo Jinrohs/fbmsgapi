@@ -3,10 +3,7 @@
 const db = require('./db');
 const send = require('./send');
 
-module.exports = (event) => {
-    const senderId = event.sender.id;
-    const message = event.message;
-
+module.exports = (senderId, message) => {
     db.getUser(senderId)
         .then((user) => {
             console.log('CONVERSATION:', user);
