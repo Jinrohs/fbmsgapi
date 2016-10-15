@@ -10,8 +10,12 @@ module.exports = (event) => {
     db.getUser(senderId).then((user) => {
         console.log('CONVERSATION:', user);
 
+        const messageAttachments = message.attachments;
         const messageText = message.text;
-        if (!messageText) {
+
+        if (!messageText && messageAttachments) {
+            const text = user.type === 'M' ? '画像なんか送りつけてんじゃねえぞこのブタ野郎...' : '画像は勘弁してください...すいません...';
+            send(senderId, { text });
             return;
         }
 
