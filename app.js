@@ -25,7 +25,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
     data.entry.forEach((pageEntry) => {
         _.forEach(pageEntry.messaging, (messagingEvent) => {
-            if (MessageEvent.is_echo) {
+            if (messagingEvent.is_echo) {
                 return true;
             }
 
