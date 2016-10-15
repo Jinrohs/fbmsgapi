@@ -2,6 +2,8 @@
  * 初回起動時にS or Mのアンケートを送る
  */
 
+'use strict';
+
 const send = require('./send');
 
 const message = {
@@ -28,4 +30,5 @@ const message = {
 
 module.exports = (event) => {
     send(event.sender.id, message);
+    send(event.sender.id, { text: 'あなたの欲望のまま、会話を初めてみましょう' });
 };

@@ -1,3 +1,7 @@
+/**
+ * S or Mの選択を登録し、マッチングする
+ */
+
 'use strict';
 
 const db = require('./db');
@@ -14,8 +18,8 @@ exports.mUser = (event) => {
                 return;
             }
 
-            db.matchUser(senderId, sUser.id)
-                .then(db.matchUser(sUser.id, senderId))
+            db.updateMatchedUser(senderId, sUser.id)
+                .then(db.updateMatchedUser(sUser.id, senderId))
                 .then(() => {
                     send(senderId, { text: '罵倒してくれるユーザーが見つかりました' });
                     send(senderId, { text: '何か発言して、存分に罵倒されてみましょう！' });
@@ -40,8 +44,8 @@ exports.sUser = (event) => {
                 return;
             }
 
-            db.matchUser(senderId, mUser.id)
-                .then(db.matchUser(mUser.id, senderId))
+            db.updateMatchedUser(senderId, mUser.id)
+                .then(db.updateMatchedUser(mUser.id, senderId))
                 .then(() => {
                     send(senderId, { text: '罵倒されたいユーザーが見つかりました' });
                     send(senderId, { text: '存分に罵倒してやりましょう！' });

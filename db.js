@@ -5,14 +5,14 @@ const DataStore = require('nedb');
 const userStore = new DataStore({ filename: './users', autoload: true });
 
 userStore.loadDatabase((error) => {
-    if (error) console.log(error);
+    if (error) console.error(error);
 });
 
 exports.getUser = (id) => {
-    console.log('GET USER');
+    console.log('DB: GET USER');
 
     return new Promise((resolve, reject) => {
-        userStore.findOne({ _id: id }, (error, user) => {
+        userStore.findOne({ id }, (error, user) => {
             if (error) {
                 reject(error);
                 return;
@@ -23,7 +23,7 @@ exports.getUser = (id) => {
 };
 
 exports.saveUser = (userId, smType, timestamp) => {
-    console.log('SAVE USER');
+    console.log('DB: SAVE USER');
 
     const newUser = {
         _id: userId,
@@ -32,6 +32,7 @@ exports.saveUser = (userId, smType, timestamp) => {
         timestamp,
         matched: false,
         matchedId: null,
+        commentUpdated: Date.now(),
     };
 
     return new Promise((resolve, reject) => {
@@ -40,14 +41,14 @@ exports.saveUser = (userId, smType, timestamp) => {
                 reject(error);
                 return;
             }
-            console.log('SAVED:', docs);
+            console.log('DB: SAVED:', docs);
             resolve(docs);
         });
     });
 };
 
 exports.getUnmatchedUser = (selfId, smType) => {
-    console.log('FIND USER:', smType);
+    console.log('DB: FIND USER:', smType);
 
     return new Promise((resolve, reject) => {
         userStore.find({ id: { $ne: selfId }, matched: false, type: smType }).sort({ timestamp: 1 }).limit(1).exec((error, unmatchedUser) => {
@@ -55,14 +56,13 @@ exports.getUnmatchedUser = (selfId, smType) => {
                 reject(error);
                 return;
             }
-            console.log(unmatchedUser);
             resolve(unmatchedUser[0]);
         });
     });
 };
 
-exports.matchUser = (selfId, matchedId) => {
-    console.log('UPDATE USER:', selfId, matchedId);
+exports.updateMatchedUser = (selfId, matchedId) => {
+    console.log('DB: UPDATE USER:', selfId, matchedId);
 
     return new Promise((resolve, reject) => {
         userStore.update({ id: selfId }, { $set: { matched: true, matchedId } }, (error) => {
@@ -77,6 +77,20 @@ exports.matchUser = (selfId, matchedId) => {
                 }
                 resolve(updatedSelfUser);
             });
+        });
+    });
+};
+
+exports.updateCommentTimestamp = (userId) => {
+    console.log('DB: UPDATE COMMENT TIMESTAMP');
+
+    return new Promise((resolve, reject) => {
+        userStore.update({ id: userId }, { $set: { commentUpdated: Date.now() } }, (error) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve(true);
         });
     });
 };

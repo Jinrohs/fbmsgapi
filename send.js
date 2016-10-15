@@ -1,6 +1,8 @@
 
+const fs = require('fs');
 const request = require('request');
-const pageAccessToken = require('./page-access-token');
+
+const pageAccessToken = fs.readFileSync('./page-access-token', 'utf-8');
 
 module.exports = (senderId, message, callback) => {
     request({
@@ -11,17 +13,15 @@ module.exports = (senderId, message, callback) => {
             recipient: { id: senderId },
             message,
         },
-    }, (err, response, body) => {
-        if (err) {
-            console.log(`err: ${err}`);
-        }
-
-        if (response.statusCode !== 200) {
-            console.log(`err: ${err}, response${JSON.stringify(response)}, body: ${JSON.stringify(body)}`);
+    }, (error, response, body) => {
+        if (error || response.statusCode !== 200) {
+            console.log(`SEND ERROR: ${error}`);
+            console.log(`SEND RESPONCE: ${JSON.stringify(response)}`);
+            console.log(`SEND BODY: ${JSON.stringify(body)}`);
         }
 
         if (typeof callback === 'function') {
-            callback(err, response, body);
+            callback(error, response, body);
         }
     });
 };
