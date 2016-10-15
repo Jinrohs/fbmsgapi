@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const receivedMessage = require('./sample1-recieved-message');
 
+const greeting = require('./greeting');
+greeting();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
