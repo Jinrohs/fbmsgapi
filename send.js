@@ -2,7 +2,7 @@
 const fs = require('fs');
 const request = require('request');
 
-const pageAccessToken = fs.readFileSync('./page-access-token', 'utf-8');
+const pageAccessToken = fs.readFileSync('./page_access_token', 'utf-8');
 
 module.exports = (senderId, message, callback) => {
     request({

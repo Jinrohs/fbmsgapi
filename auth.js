@@ -10,7 +10,6 @@ const express = require('express');
 const app = express();
 
 app.get('/v1/webhook', (req, res) => {
-    console.log('access');
     if (req.query['hub.verify_token'] === 'e7c65e7dfc53550c566db30cb41d550b') {
         res.send(req.query['hub.challenge']);
     } else {
