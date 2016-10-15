@@ -17,19 +17,21 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
     const data = req.body;
 
-    console.log(data);
+    console.log('BODY:', data);
 
     console.log('-------');
 
-
-    if (data.object !== 'page') {
-        console.log('not page');
-        res.sendStatus(200);
-    }
+    // if (data.object !== 'page') {
+    //     console.log('not page');
+    //     res.sendStatus(200);
+    // }
 
     data.entry.forEach((pageEntry) => {
         pageEntry.messaging.forEach((messagingEvent) => {
-            console.log(messagingEvent);
+
+            console.log('MESSAGE EVENT:', messagingEvent);
+
+
             if (messagingEvent.optins) {
                 // console.log('receivedAuthentication');
                 // receivedAuthentication(messagingEvent);

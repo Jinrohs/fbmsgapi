@@ -3,26 +3,26 @@
 const request = require('request');
 const pageAccessToken = require('./page-access-token');
 
-const callSendApi = (messageData, callback) => {
+const sendTextMessage = (recipientId, messageText, callback) => {
     request({
         uri: 'https://graph.facebook.com/v2.6/me/messages',
         qs: { access_token: pageAccessToken },
         method: 'POST',
-        json: messageData,
+        json: {
+            recipient: { id: recipientId },
+            message: { text: messageText },
+        },
     }, (err, response, body) => {
-        if (callback !== undefined) {
+        if (typeof callback === 'function') {
             callback(err, response, body);
         }
     });
 };
 
-const sendTextMessage = (recipientId, messageText) => {
-    const messageData = {
-        recipient: { id: recipientId },
-        message: { text: messageText },
-    };
-    callSendApi(messageData);
-};
+// const sendTextMessage = (recipientId, messageText) => {
+//     const messageData = ;
+//     callSendApi(messageData);
+// };
 
 module.exports = (event) => {
     const senderID = event.sender.id;
@@ -31,14 +31,14 @@ module.exports = (event) => {
     const message = event.message;
 
     console.log(`メッセージ受信 ユーザ: ${senderID}, ページ ${recipientID}, 時間${timeOfMessage}`);
-    console.log(JSON.stringify(message));
+    // console.log(JSON.stringify(message));
 
     // const messageId = message.mid;
     const messageText = message.text;
     const messageAttachments = message.attachments;
 
     if (messageText) {
-        console.log(message);
+        // console.log(message);
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
