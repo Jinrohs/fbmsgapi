@@ -17,6 +17,8 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
     const data = req.body;
 
+    console.log(data);
+
     if (data.object !== 'page') {
         console.log('not page');
         res.sendStatus(200);
@@ -26,19 +28,19 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
         pageEntry.messaging.forEach((messagingEvent) => {
             console.log(messagingEvent);
             if (messagingEvent.optins) {
-                console.log('receivedAuthentication');
+                // console.log('receivedAuthentication');
                 // receivedAuthentication(messagingEvent);
             } else if (messagingEvent.message) {
-                console.log('recievedMessage');
+                // console.log('recievedMessage');
                 receivedMessage(messagingEvent);
             } else if (messagingEvent.delivery) {
-                console.log('receivedDeliveryConfirmation');
+                // console.log('receivedDeliveryConfirmation');
                 // receivedDeliveryConfirmation(messagingEvent);
             } else if (messagingEvent.postback) {
-                console.log('receivedPostback');
+                // console.log('receivedPostback');
                 // receivedPostback(messagingEvent);
             } else {
-                console.log('Webhook received unknown messagingEvent: ', messagingEvent);
+                // console.log('Webhook received unknown messagingEvent: ', messagingEvent);
             }
         });
     });
