@@ -13,11 +13,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/fbmsgapi/v1/webhook', (req, res) => {
-    console.log('access');
+    console.log('==========================');
 
     const data = req.body;
 
     console.log(data);
+
+    console.log('-------');
+
 
     if (data.object !== 'page') {
         console.log('not page');
