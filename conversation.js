@@ -24,7 +24,7 @@ module.exports = (event) => {
 
             // マッチしていないのに発言した場合
             if (!user.matched) {
-                const text = user.type === 'M' ? 'まだマッチしていないからもうちょっと待ってろよ...' : 'まだマッチしていないのでお待ち下さい...';
+                const text = user.type === 'M' ? 'まだ罵倒してくれるユーザーが見つかっていません...' : 'まだ罵倒されたいブタ野郎が見つかっていませんので、お待ち下さい...';
                 send(senderId, { text });
                 return;
             }
