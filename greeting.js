@@ -12,7 +12,7 @@ const message = {
             text: 'あなたのタイプはどちらですか？',
             buttons: [
                 {
-                    type: 'ｐｏｓｔｂａｃｋ',
+                    type: 'postback',
                     title: '罵倒したい',
                     payload: 'REGISTER_AS_M',
                 },
