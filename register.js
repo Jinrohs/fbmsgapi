@@ -10,23 +10,20 @@ exports.mUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'S'))
         .then((sUser) => {
             if (!sUser) {
-                const text = '罵倒したいユーザーを探しています...';
-                send(senderId, { text });
+                send(senderId, { text: '罵倒してくれるユーザーを探しています...' });
                 return;
             }
 
-            const text = '罵倒されたいユーザーが見つかりました';
             db.matchUser(senderId, sUser.id)
                 .then(db.matchUser(sUser.id, senderId))
                 .then(() => {
-                    send(senderId, { text });
-                    send(sUser.id, { text });
+                    send(senderId, { text: '罵倒してくれるユーザーが見つかりました' });
+                    send(sUser.id, { text: '罵倒されたいユーザーが見つかりました' });
                 });
         })
         .catch((error) => {
             console.log(error);
-            const text = 'データ取得に失敗しました';
-            send(senderId, { text });
+            send(senderId, { text: 'データ取得に失敗しました' });
         });
 };
 
@@ -37,22 +34,19 @@ exports.sUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'M'))
         .then((mUser) => {
             if (!mUser) {
-                const text = '罵倒されたいユーザーを探しています...';
-                send(senderId, { text });
+                send(senderId, { text: '罵倒されたいユーザーを探しています...' });
                 return;
             }
 
-            const text = '罵倒されたいユーザーが見つかりました';
             db.matchUser(senderId, mUser.id)
                 .then(db.matchUser(mUser.id, senderId))
                 .then(() => {
-                    send(senderId, { text });
-                    send(mUser.id, { text });
+                    send(senderId, { text: '罵倒されたいユーザーが見つかりました' });
+                    send(mUser.id, { text: '罵倒してくれるユーザーが見つかりました' });
                 });
         })
         .catch((error) => {
             console.log(error);
-            const text = 'データ取得に失敗しました';
-            send(senderId, { text });
+            send(senderId, { text: 'データ取得に失敗しました' });
         });
 };
