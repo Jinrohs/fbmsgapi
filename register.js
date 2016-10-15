@@ -16,6 +16,7 @@ exports.mUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'S'))
         .then((sUser) => {
             if (!sUser) {
+                console.log('WAITING: S user...');
                 send(senderId, { text: 'ユーザーを探しています...' });
                 return;
             }
@@ -31,7 +32,7 @@ exports.mUser = (event) => {
                 });
         })
         .catch((error) => {
-            console.log(error);
+            console.log('REGISTER ERROR:', error);
             send(senderId, { text: 'データ取得に失敗したようです、もう一度お試しください' });
         });
 };
@@ -45,6 +46,7 @@ exports.sUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'M'))
         .then((mUser) => {
             if (!mUser) {
+                console.log('WAITING: M user...');
                 send(senderId, { text: 'ユーザーを探しています...' });
                 return;
             }
@@ -60,7 +62,7 @@ exports.sUser = (event) => {
                 });
         })
         .catch((error) => {
-            console.log(error);
+            console.log('REGISTER ERROR:', error);
             send(senderId, { text: 'データ取得に失敗したようです、もう一度お試しください' });
         });
 };

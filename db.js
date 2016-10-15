@@ -36,13 +36,13 @@ exports.saveUser = (userId, smType, timestamp) => {
     };
 
     return new Promise((resolve, reject) => {
-        userStore.update({ id: userId }, newUser, { upsert: true }, (error, num, docs) => {
+        userStore.update({ id: userId }, newUser, { upsert: true }, (error) => {
             if (error) {
                 reject(error);
                 return;
             }
-            console.log('DB: SAVED:', docs);
-            resolve(docs);
+            console.log('DB: SAVED', userId);
+            resolve();
         });
     });
 };

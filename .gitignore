@@ -1,7 +1,6 @@
-page-access-token.js
-page_access_token
-*~
 node_modules/
 builds/
+page_access_token
 users
 *.log
+*~
