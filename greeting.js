@@ -33,6 +33,5 @@ const callback = (err, response, body) => {
 };
 
 module.exports = (event) => {
-    const recipientID = event.recipient.id;
-    send(recipientID, message, callback);
+    send(event.sender.id, message, callback);
 };
