@@ -18,12 +18,14 @@ exports.mUser = (event) => {
                 .then(db.matchUser(sUser.id, senderId))
                 .then(() => {
                     send(senderId, { text: '罵倒してくれるユーザーが見つかりました' });
+                    send(senderId, { text: '何か発言して、存分に罵倒されてみましょう！' });
                     send(sUser.id, { text: '罵倒されたいユーザーが見つかりました' });
+                    send(sUser.id, { text: '存分に罵倒してやりましょう！' });
                 });
         })
         .catch((error) => {
             console.log(error);
-            send(senderId, { text: 'データ取得に失敗しました' });
+            send(senderId, { text: 'データ取得に失敗したようです、もう一度お試しください' });
         });
 };
 
@@ -42,11 +44,13 @@ exports.sUser = (event) => {
                 .then(db.matchUser(mUser.id, senderId))
                 .then(() => {
                     send(senderId, { text: '罵倒されたいユーザーが見つかりました' });
+                    send(senderId, { text: '存分に罵倒してやりましょう！' });
                     send(mUser.id, { text: '罵倒してくれるユーザーが見つかりました' });
+                    send(mUser.id, { text: '何か発言して、存分に罵倒されてみましょう！' });
                 });
         })
         .catch((error) => {
             console.log(error);
-            send(senderId, { text: 'データ取得に失敗しました' });
+            send(senderId, { text: 'データ取得に失敗したようです、もう一度お試しください' });
         });
 };

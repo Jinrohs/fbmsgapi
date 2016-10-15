@@ -16,7 +16,8 @@ module.exports = (event) => {
         }
 
         if (!user.matched) {
-            send(senderId, { text: 'まだマッチしていないのでお待ち下さい' });
+            const text = user.type === 'M' ? 'まだマッチしていないからもうちょっと待ってろよ...' : 'まだマッチしていないのでお待ち下さい...';
+            send(senderId, { text });
             return;
         }
 
