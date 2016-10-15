@@ -14,7 +14,7 @@ const message = {
                 {
                     type: 'postback',
                     title: '罵倒したい',
-                    payload: 'REGISTER_AS_M',
+                    payload: 'REGISTER_AS_S',
                 },
                 {
                     type: 'postback',
