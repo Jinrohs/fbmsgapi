@@ -34,7 +34,7 @@ module.exports = (event) => {
             break;
         default: {
             const text = `${messageText}~? マジかぁ超ウケルwww`;
-            send(senderId, { message: { text } });
+            send(senderId, { text });
             break;
         }
     }

@@ -9,14 +9,14 @@ module.exports = (senderId, message, callback) => {
         method: 'POST',
         json: {
             recipient: { id: senderId },
-            message: message,
+            message,
         },
     }, (err, response, body) => {
-        if(err) {
+        if (err) {
             console.log(`err: ${err}`);
         }
 
-        if(response.statusCode != 200) {
+        if (response.statusCode !== 200) {
             console.log(`err: ${err}, response${JSON.stringify(response)}, body: ${JSON.stringify(body)}`);
         }
 
