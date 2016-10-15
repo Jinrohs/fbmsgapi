@@ -28,9 +28,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
 
     data.entry.forEach((pageEntry) => {
         pageEntry.messaging.forEach((messagingEvent) => {
-
             console.log('MESSAGE EVENT:', messagingEvent);
-
 
             if (messagingEvent.optins) {
                 // console.log('receivedAuthentication');

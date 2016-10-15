@@ -30,34 +30,35 @@ module.exports = (event) => {
     const timeOfMessage = event.timestamp;
     const message = event.message;
 
+    if (message.is_echo) {
+        console.log('エコーがきました');
+    }
+
     console.log(`メッセージ受信 ユーザ: ${senderID}, ページ ${recipientID}, 時間${timeOfMessage}`);
     // console.log(JSON.stringify(message));
-
     // const messageId = message.mid;
-    const messageText = message.text;
+    const messageText = message.text || '';
     const messageAttachments = message.attachments;
 
-    if (messageText) {
-        // console.log(message);
-        // If we receive a text message, check to see if it matches any special
-        // keywords and send back the corresponding example. Otherwise, just echo
-        // the text we received.
-        switch (messageText) {
-            case 'image':
-                break;
-            case 'button':
-                break;
-            case 'generic':
-                break;
-            case 'receipt':
-                break;
-            default: {
-                const newMessage = `${messageText}~? マジかぁ超ウケルwww`;
-                sendTextMessage(senderID, newMessage);
-                break;
-            }
-        }
-    } else if (messageAttachments) {
+    if (!messageText && messageAttachments) {
+        console.log('ATTACHMENTS:', messageAttachments);
         sendTextMessage(`${senderID}Message with attachment received`);
+        return;
+    }
+
+    switch (messageText) {
+        case 'image':
+            break;
+        case 'button':
+            break;
+        case 'generic':
+            break;
+        case 'receipt':
+            break;
+        default: {
+            const newMessage = `${messageText}~? マジかぁ超ウケルwww`;
+            sendTextMessage(senderID, newMessage);
+            break;
+        }
     }
 };
