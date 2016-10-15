@@ -26,6 +26,7 @@ exports.saveUser = (userId, smType, timestamp) => {
     console.log('SAVE USER');
 
     const newUser = {
+        _id: userId,
         id: userId,
         type: smType,
         timestamp,
@@ -34,7 +35,7 @@ exports.saveUser = (userId, smType, timestamp) => {
     };
 
     return new Promise((resolve, reject) => {
-        userStore.insert(newUser, (error, savedUser) => {
+        userStore.update({ _id: userId }, newUser, { upsert: true }, (error, savedUser) => {
             if (error) {
                 reject(error);
                 return;
