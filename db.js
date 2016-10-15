@@ -35,7 +35,7 @@ exports.saveUser = (userId, smType, timestamp) => {
     };
 
     return new Promise((resolve, reject) => {
-        userStore.update({ _id: userId }, { $set: newUser }, { upsert: true }, (error, num, docs) => {
+        userStore.update({ id: userId }, newUser, { upsert: true }, (error, num, docs) => {
             if (error) {
                 reject(error);
                 return;
