@@ -2,6 +2,7 @@
  * メッセージ受信サンプル
  */
 
+const _ = require('lodash');
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -21,7 +22,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
     }
 
     data.entry.forEach((pageEntry) => {
-        pageEntry.messaging.forEach((messagingEvent) => {
+        _.forEach(pageEntry.messaging, (messagingEvent) => {
             if (messagingEvent.optins) {
                 return;
             }
