@@ -9,49 +9,40 @@ const bodyParser = require('body-parser');
 const app = express();
 const receivedMessage = require('./sample1-recieved-message');
 
-const greeting = require('./greeting');
-greeting();
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post('/fbmsgapi/v1/webhook', (req, res) => {
     console.log('==========================');
-
     const data = req.body;
 
-    console.log('BODY:', data);
-
-    console.log('-------');
-
-    // if (data.object !== 'page') {
-    //     console.log('not page');
-    //     res.sendStatus(200);
-    // }
+    if (!(data && data.entry)) {
+        res.status(400).end();
+    }
 
     data.entry.forEach((pageEntry) => {
         pageEntry.messaging.forEach((messagingEvent) => {
-            console.log('MESSAGE EVENT:', messagingEvent);
-
             if (messagingEvent.optins) {
-                // console.log('receivedAuthentication');
-                // receivedAuthentication(messagingEvent);
-            } else if (messagingEvent.message) {
-                // console.log('recievedMessage');
+                return;
+            }
+
+            if (messagingEvent.message) {
+                console.log('MESSAGE EVENT:', messagingEvent);
                 receivedMessage(messagingEvent);
-            } else if (messagingEvent.delivery) {
-                // console.log('receivedDeliveryConfirmation');
-                // receivedDeliveryConfirmation(messagingEvent);
-            } else if (messagingEvent.postback) {
-                // console.log('receivedPostback');
-                // receivedPostback(messagingEvent);
-            } else {
-                // console.log('Webhook received unknown messagingEvent: ', messagingEvent);
+                return;
+            }
+
+            if (messagingEvent.delivery) {
+                return;
+            }
+
+            if (messagingEvent.postback) {
+                return;
             }
         });
     });
 
-    res.sendStatus(200);
+    res.status(200).end();
 });
 
 const server = http.createServer(app);
