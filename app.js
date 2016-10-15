@@ -42,6 +42,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             if (messagingEvent.postback) {
                 console.log('POSTBACK:', messagingEvent);
                 if (messagingEvent.postback.payload === 'NEW_THREAD') {
+                    console.log('enter!!');
                     greeting(messagingEvent);
                 }
                 return;
