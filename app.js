@@ -23,37 +23,38 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
     }
 
     data.entry.forEach((pageEntry) => {
-        _.forEach(pageEntry.messaging, (messagingEvent) => {
-            if (messagingEvent.message) {
-                if (messagingEvent.message.is_echo) {
+        _.forEach(pageEntry.messaging, (event) => {
+            if (event.message) {
+                if (event.message.is_echo) {
                     return;
                 }
-
                 console.log('==========================');
-                console.log('MESSAGE:', messagingEvent);
-
-                conversation(messagingEvent);
+                console.log('MESSAGE:', `senderId: ${event.sender.id}, text: ${event.message.text}`);
+                conversation(event);
                 return;
             }
 
-            if (messagingEvent.delivery) {
+            if (event.delivery) {
                 return;
             }
 
-            if (messagingEvent.postback) {
-                console.log('POSTBACK:', messagingEvent);
-                if (messagingEvent.postback.payload === 'NEW_THREAD') {
-                    greeting(messagingEvent);
+            if (event.postback) {
+                console.log('==========================');
+                if (event.postback.payload === 'NEW_THREAD') {
+                    console.log('GREETING:', event);
+                    greeting(event);
                     return;
                 }
 
-                if (messagingEvent.postback.payload === 'REGISTER_AS_M') {
-                    register.mUser(messagingEvent);
+                if (event.postback.payload === 'REGISTER_AS_M') {
+                    console.log('REGISTER:', event);
+                    register.mUser(event);
                     return;
                 }
 
-                if (messagingEvent.postback.payload === 'REGISTER_AS_S') {
-                    register.sUser(messagingEvent);
+                if (event.postback.payload === 'REGISTER_AS_S') {
+                    console.log('REGISTER:', event);
+                    register.sUser(event);
                     return;
                 }
             }
