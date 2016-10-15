@@ -10,6 +10,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const receivedMessage = require('./sample1-recieved-message');
 
+const greeting = greeting();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -38,7 +40,9 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             }
 
             if (messagingEvent.postback) {
-                console.log('POSTBACK:', messagingEvent);
+                if(messagingEvent.postback.payload === "NEW_THREAD") {
+                    greeting(messagingEvent);
+                }
                 return;
             }
         });
