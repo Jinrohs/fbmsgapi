@@ -2,10 +2,6 @@ const db = require('./db');
 const send = require('./send');
 
 module.exports = (event) => {
-    if(event.is_echo) {
-        return;
-    }
-
     const senderID = event.sender.id;
     const message = event.message;
     
