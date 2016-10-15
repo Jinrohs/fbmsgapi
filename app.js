@@ -38,6 +38,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
             }
 
             if (messagingEvent.postback) {
+                console.log('POSTBACK:', messagingEvent);
                 return;
             }
         });
