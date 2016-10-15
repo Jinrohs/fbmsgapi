@@ -30,7 +30,7 @@ exports.seveUser = (userId, smType, timestamp) => {
         type: smType,
         timestamp,
         matched: true,
-        matchedUserId: '1259907210715796',
+        matchedId: '1259907210715796',
     };
 
     return new Promise((resolve, reject) => {

@@ -7,14 +7,16 @@ module.exports = (event) => {
     const senderID = event.sender.id;
     const message = event.message;
 
-    const matchedId = db.getUser(senderID);
+    db.getUser(senderID).then((user) => {
+        console.log('CONVERSATION:', user);
 
-    const messageText = message.text;
-    if (!messageText) {
-        return;
-    }
+        const messageText = message.text;
+        if (!messageText) {
+            return;
+        }
 
-    // ここに画像生成処理を書く
+        // ここに画像生成処理を書く
 
-    send(matchedId, { message: { text: messageText } });
+        send(user.matchedId, { text: messageText });
+    });
 };
