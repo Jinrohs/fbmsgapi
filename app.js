@@ -15,6 +15,43 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const routeMessage = (event) => {
+    if (event.message) {
+        if (event.message.is_echo) {
+            return;
+        }
+        console.log('==========================');
+        console.log('MESSAGE:', `senderId: ${event.sender.id}, text: ${event.message.text}`);
+        conversation(event);
+        return;
+    }
+
+    if (event.delivery) {
+        return;
+    }
+
+    if (event.postback) {
+        console.log('==========================');
+        if (event.postback.payload === 'NEW_THREAD') {
+            console.log('GREETING:', event);
+            greeting(event);
+            return;
+        }
+
+        if (event.postback.payload === 'REGISTER_AS_M') {
+            console.log('REGISTER:', event);
+            register.mUser(event);
+            return;
+        }
+
+        if (event.postback.payload === 'REGISTER_AS_S') {
+            console.log('REGISTER:', event);
+            register.sUser(event);
+            return;
+        }
+    }
+};
+
 app.post('/fbmsgapi/v1/webhook', (req, res) => {
     const data = req.body;
 
@@ -23,42 +60,7 @@ app.post('/fbmsgapi/v1/webhook', (req, res) => {
     }
 
     data.entry.forEach((pageEntry) => {
-        _.forEach(pageEntry.messaging, (event) => {
-            if (event.message) {
-                if (event.message.is_echo) {
-                    return;
-                }
-                console.log('==========================');
-                console.log('MESSAGE:', `senderId: ${event.sender.id}, text: ${event.message.text}`);
-                conversation(event);
-                return;
-            }
-
-            if (event.delivery) {
-                return;
-            }
-
-            if (event.postback) {
-                console.log('==========================');
-                if (event.postback.payload === 'NEW_THREAD') {
-                    console.log('GREETING:', event);
-                    greeting(event);
-                    return;
-                }
-
-                if (event.postback.payload === 'REGISTER_AS_M') {
-                    console.log('REGISTER:', event);
-                    register.mUser(event);
-                    return;
-                }
-
-                if (event.postback.payload === 'REGISTER_AS_S') {
-                    console.log('REGISTER:', event);
-                    register.sUser(event);
-                    return;
-                }
-            }
-        });
+        _.forEach(pageEntry.messaging, routeMessage);
     });
 
     res.status(200).end();

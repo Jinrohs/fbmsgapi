@@ -16,7 +16,7 @@ exports.mUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'S'))
         .then((sUser) => {
             if (!sUser) {
-                send(senderId, { text: '罵倒してくれるユーザーを探しています...' });
+                send(senderId, { text: 'ユーザーを探しています...' });
                 return;
             }
 
@@ -24,7 +24,8 @@ exports.mUser = (event) => {
                 .then(db.updateMatchedUser(sUser.id, senderId))
                 .then(() => {
                     send(senderId, { text: '罵倒してくれるユーザーが見つかりました' });
-                    send(senderId, { text: '何か発言して、存分に罵倒されてみましょう！' });
+                    send(senderId, { text: 'まずは罵倒してくださいと挨拶してみましょう' });
+
                     send(sUser.id, { text: '罵倒されたいユーザーが見つかりました' });
                     send(sUser.id, { text: '存分に罵倒してやりましょう！' });
                 });
@@ -44,7 +45,7 @@ exports.sUser = (event) => {
         .then(() => db.getUnmatchedUser(senderId, 'M'))
         .then((mUser) => {
             if (!mUser) {
-                send(senderId, { text: '罵倒されたいユーザーを探しています...' });
+                send(senderId, { text: 'ユーザーを探しています...' });
                 return;
             }
 
@@ -53,8 +54,9 @@ exports.sUser = (event) => {
                 .then(() => {
                     send(senderId, { text: '罵倒されたいユーザーが見つかりました' });
                     send(senderId, { text: '存分に罵倒してやりましょう！' });
+
                     send(mUser.id, { text: '罵倒してくれるユーザーが見つかりました' });
-                    send(mUser.id, { text: '何か発言して、存分に罵倒されてみましょう！' });
+                    send(mUser.id, { text: 'まずは罵倒してくださいと挨拶してみましょう' });
                 });
         })
         .catch((error) => {
