@@ -14,7 +14,7 @@ const md5hex = (src) => {
 
 const getFilePath = (user) => {
     const filename = md5hex(user.id + user.matchedId + user.timestamp + Date.now());
-    return `./static/${filename}.png`;
+    return `./static/conversation/${filename}.png`;
 };
 
 const getImageMessage = filePath => ({
