@@ -5,25 +5,25 @@ const send = require('./send');
 const exec = require('child_process').exec;
 const crypto = require('crypto');
 
-const md5hex = function (src) {
-    var md5hash = crypto.createHash('md5');
+const md5hex = (src) => {
+    const md5hash = crypto.createHash('md5');
     md5hash.update(src, 'binary');
     return md5hash.digest('hex');
 };
 
-const getFilePath = (sender) => {
+const getFilePath = (user) => {
     const filename = md5hex(user.id + user.matchedId + user.timestamp);
     return `./static/${filename}.png`;
-}
+};
 
 const getImageMessage = (filePath) => {
     return {
         attachment: {
-            type: "image",
+            type: 'image',
             payload: {
-                url: `https://voyager.mydns.vc/fbmsgapi/static/${filePath}`
-            }
-        }
+                url: `https://voyager.mydns.vc/fbmsgapi/static/${filePath}`,
+            },
+        },
     };
 };
 
@@ -50,14 +50,19 @@ module.exports = (senderId, message) => {
                 return;
             }
 
+            if (sendText.length > 48) {
+                send(user.matchedId, { text: sendText })
+                    .then(db.updateCommentTimestamp(senderId));
+            }
+
             const filePath = getFilePath(user);
             const cmd = `/home/ubuntu/FBMsgrHackathon/python/image_gen.py ${sendText}, ${user.type}, ${filePath}`;
             exec(cmd, (err, stdout, stderr) => {
                 if (err) {
-                    console.log(err);
+                    console.log(err + stderr);
                 }
                 send(user.matchedId, getImageMessage(filePath))
                     .then(db.updateCommentTimestamp(senderId));
-            });            
+            });
         });
 };
