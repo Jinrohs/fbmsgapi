@@ -12,7 +12,7 @@ const md5hex = (src) => {
 };
 
 const getFilePath = (user) => {
-    const filename = md5hex(user.id + user.matchedId + user.timestamp);
+    const filename = md5hex(user.id + user.matchedId + user.timestamp + Date.now());
     return `./static/${filename}.png`;
 };
 
@@ -21,7 +21,7 @@ const getImageMessage = (filePath) => {
         attachment: {
             type: 'image',
             payload: {
-                url: `https://voyager.mydns.vc/fbmsgapi/static/${filePath}`,
+                url: `https://voyager.mydns.vc/fbmsgapi/${filePath}`,
             },
         },
     };
