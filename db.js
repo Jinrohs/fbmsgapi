@@ -22,6 +22,20 @@ exports.getUser = (id) => {
     });
 };
 
+exports.deleteUser = (id) => {
+    console.log('DB: DELETE USER');
+
+    return new Promise((resolve, reject) => {
+        userStore.remove({ id }, {}, (error) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+            resolve();
+        });
+    });
+};
+
 exports.saveUser = (userId, smType, timestamp) => {
     console.log('DB: SAVE USER');
 

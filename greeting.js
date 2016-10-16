@@ -29,6 +29,5 @@ const greetingMessage = {
 };
 
 module.exports = (senderId) => {
-    send(senderId, greetingMessage)
-        .then(send(senderId, { text: 'あなたの欲望のまま、会話を初めてみましょう' }));
+    send(senderId, greetingMessage).then(send(senderId, { text: 'あなたの欲望のまま、会話を初めてみましょう' }));
 };
