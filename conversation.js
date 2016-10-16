@@ -27,7 +27,7 @@ const getImageMessage = filePath => ({
 });
 
 const showEffect = (user) => {
-    const probabillity = 0.3;
+    const probabillity = 0.6;
     if (Math.random() <= probabillity) {
         effecter(user.matchedId, user.type);
     }
