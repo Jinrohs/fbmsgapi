@@ -27,8 +27,8 @@ const getImageMessage = filePath => ({
 });
 
 const showEffect = (user) => {
-    const probabillity = 0.5;
-    if (Math.random() > probabillity) {
+    const probabillity = 1.0;
+    if (Math.random() <= probabillity) {
         effecter(user.matchedId, user.type);
     }
 };
@@ -61,7 +61,8 @@ module.exports = (senderId, message) => {
             }
 
             const filePath = getFilePath(user);
-            const cmd = `/home/ubuntu/FBMsgrHackathon/python/image_gen.py ${sendText}, ${user.type}, ${filePath}`;
+            const cmd = `/home/ubuntu/FBMsgrHackathon/python/image_gen.py ${sendText} ${user.type} ${filePath}`;
+            console.log(cmd);
             exec(cmd, (err, stdout, stderr) => {
                 if (err) {
                     console.log(err + stderr);

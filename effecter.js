@@ -18,11 +18,11 @@ const getEffectImage = filePath => ({
 });
 
 const rand = (min, max) => (
-    ((Math.random() * (max - min)) + min)
+    Math.round((Math.random() * (max - min)) + min)
 );
 
 module.exports = (senderId, smType) => {
-    const dir = `./static/effector_${smType === 'M' ? 'm' : 's'}`;
+    const dir = `static/effector_${smType === 'M' ? 'm' : 's'}`;
     fs.readdir(dir, (err, files) => {
         if (err) {
             console.log(err);
@@ -30,6 +30,7 @@ module.exports = (senderId, smType) => {
         }
 
         const index = rand(1, files.length);
-        send(senderId, getEffectImage(files[index]));
+        const file = `${dir}/${files[index]}`;
+        send(senderId, getEffectImage(file));
     });
 };
