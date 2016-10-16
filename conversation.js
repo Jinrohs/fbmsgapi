@@ -32,6 +32,10 @@ module.exports = (senderId, message) => {
         .then((user) => {
             console.log('CONVERSATION:', user);
 
+            if (!user) {
+                return;
+            }
+
             const sendAttachments = message.attachments;
             const sendText = message.text;
 
