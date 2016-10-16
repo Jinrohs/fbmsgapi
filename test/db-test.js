@@ -2,11 +2,12 @@
 
 const DataStore = require('nedb');
 
-const userStore = new DataStore({ filename: './users', autoload: true });
+const userStore = new DataStore({ filename: '../users', autoload: true });
 
 userStore.loadDatabase((error) => {
     if (error) console.log(error);
 });
+
 //
 // const newUser = {
 //     _id: 'test',
@@ -25,14 +26,14 @@ userStore.loadDatabase((error) => {
 //     console.log(unmatchedUser);
 // });
 
-userStore.update({ id: 'test2' }, { $set: { matched: true, matchedId: 999 } }, (error, num, user) => {
-    if (error) {
-        return;
-    }
-    // console.log(user);
-    // console.log(num);
-
-    userStore.findOne({ id: 'test2' }, (error, user) => {
-        console.log(user);
-    });
-});
+// userStore.update({ id: 'test2' }, { $set: { matched: true, matchedId: 999 } }, (error, num, user) => {
+//     if (error) {
+//         return;
+//     }
+//     // console.log(user);
+//     // console.log(num);
+//
+//     userStore.findOne({ id: 'test2' }, (error, user) => {
+//         console.log(user);
+//     });
+// });
