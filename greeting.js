@@ -13,7 +13,7 @@ const greetingMessage = {
             template_type: 'generic',
             elements: [{
                 title: 'タイプ診断',
-                image_url: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
+                image_url: 'https://voyager.mydns.vc/fbmsgapi/static/greeting.png',
                 subtitle: 'あなたのタイプはどちらですか？',
                 buttons: [
                     {
