@@ -11,7 +11,7 @@ const greetingMessage = {
         type: 'template',
         payload: {
             template_type: 'button',
-            text: 'あなたのタイプはどちらですか？',
+            text: '[SMM] あなたのタイプはどちらですか？',
             buttons: [
                 {
                     type: 'postback',
@@ -29,5 +29,5 @@ const greetingMessage = {
 };
 
 module.exports = (senderId) => {
-    send(senderId, greetingMessage).then(send(senderId, { text: 'あなたの欲望のまま、会話を初めてみましょう' }));
+    send(senderId, greetingMessage).then(send(senderId, { text: '[SMM] あなたの欲望のまま、会話を初めてみましょう！' }));
 };

@@ -11,16 +11,16 @@ const greeting = require('./greeting');
 module.exports = (senderId) => {
     db.getUser(senderId)
         .then((user) => {
-            send(senderId, { text: '退出します' });
-            send(senderId, { text: 'ご利用ありがとうございました！' });
+            send(senderId, { text: '[SMM] 退出します' });
+            send(senderId, { text: '[SMM] ご利用ありがとうございました！' });
 
             db.deleteUser(senderId, () => {
                 greeting(senderId);
             });
 
             if (user.matchedId) {
-                send(user.matchedId, { text: '相手が退出しました' });
-                send(user.matchedId, { text: 'ご利用ありがとうございました！' });
+                send(user.matchedId, { text: '[SMM] 相手が退出しました' });
+                send(user.matchedId, { text: '[SMM] ご利用ありがとうございました！' });
 
                 db.deleteUser(user.matchedId, () => {
                     greeting(user.matchedId);
