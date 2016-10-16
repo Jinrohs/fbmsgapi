@@ -54,11 +54,6 @@ module.exports = (senderId, message) => {
                 return;
             }
 
-            if (sendText.length > 48) {
-                send(user.matchedId, { text: sendText })
-                    .then(db.updateCommentTimestamp(senderId));
-            }
-
             const filePath = getFilePath(user);
             const cmd = `/home/ubuntu/FBMsgrHackathon/python/image_gen.py ${sendText}, ${user.type}, ${filePath}`;
             exec(cmd, (err, stdout, stderr) => {
