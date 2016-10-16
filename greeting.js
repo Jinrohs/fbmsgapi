@@ -27,7 +27,7 @@ const greetingMessage = {
         // },
         payload: {
             template_type: 'generic',
-            elements: {
+            elements: [{
                 title: 'タイプ診断',
                 image_url: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
                 subtitle: '[SMM] あなたのタイプはどちらですか？',
@@ -43,7 +43,7 @@ const greetingMessage = {
                         payload: 'REGISTER_AS_M',
                     },
                 ],
-            },
+            }],
         },
     },
 };
