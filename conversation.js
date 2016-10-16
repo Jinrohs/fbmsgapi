@@ -4,6 +4,7 @@ const db = require('./db');
 const send = require('./send');
 const exec = require('child_process').exec;
 const crypto = require('crypto');
+const effecter = require('./effecter');
 
 const md5hex = (src) => {
     const md5hash = crypto.createHash('md5');
@@ -24,6 +25,13 @@ const getImageMessage = filePath => ({
         },
     },
 });
+
+const showEffect = (user) => {
+    const probabillity = 0.5;
+    if (Math.random() > probabillity) {
+        effecter(user.matchedId, user.type);
+    }
+};
 
 module.exports = (senderId, message) => {
     db.getUser(senderId)
@@ -59,7 +67,8 @@ module.exports = (senderId, message) => {
                     console.log(err + stderr);
                 }
                 send(user.matchedId, getImageMessage(filePath))
-                    .then(db.updateCommentTimestamp(senderId));
+                    .then(db.updateCommentTimestamp(senderId))
+                    .then(showEffect(user));
             });
         });
 };

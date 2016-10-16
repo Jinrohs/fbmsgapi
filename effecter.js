@@ -5,6 +5,8 @@
  */
 
 const send = require('./send');
+const fs = require('fs');
+
 
 const getEffectImage = filePath => ({
     attachment: {
@@ -15,6 +17,19 @@ const getEffectImage = filePath => ({
     },
 });
 
-module.exports = (senderId, smType) => {
+const rand = (min, max) => (
+    ((Math.random() * (max - min)) + min)
+);
 
+module.exports = (senderId, smType) => {
+    const dir = `./static/effector_${smType === 'M' ? 'm' : 's'}`;
+    fs.readdir(dir, (err, files) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        const index = rand(1, files.length);
+        send(senderId, getEffectImage(files[index]));
+    });
 };
