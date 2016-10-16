@@ -16,16 +16,14 @@ const getFilePath = (user) => {
     return `./static/${filename}.png`;
 };
 
-const getImageMessage = (filePath) => {
-    return {
-        attachment: {
-            type: 'image',
-            payload: {
-                url: `https://voyager.mydns.vc/fbmsgapi/${filePath}`,
-            },
+const getImageMessage = filePath => ({
+    attachment: {
+        type: 'image',
+        payload: {
+            url: `https://voyager.mydns.vc/fbmsgapi/${filePath}`,
         },
-    };
-};
+    },
+});
 
 module.exports = (senderId, message) => {
     db.getUser(senderId)

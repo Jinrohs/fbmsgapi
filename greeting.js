@@ -9,28 +9,12 @@ const send = require('./send');
 const greetingMessage = {
     attachment: {
         type: 'template',
-        // payload: {
-        //     template_type: 'button',
-        //     text: '[SMM] あなたのタイプはどちらですか？',
-        //     buttons: [
-        //         {
-        //             type: 'postback',
-        //             title: '罵倒したい',
-        //             payload: 'REGISTER_AS_S',
-        //         },
-        //         {
-        //             type: 'postback',
-        //             title: '罵倒されたい',
-        //             payload: 'REGISTER_AS_M',
-        //         },
-        //     ],
-        // },
         payload: {
             template_type: 'generic',
             elements: [{
                 title: 'タイプ診断',
                 image_url: 'http://petersapparel.parseapp.com/img/whiteshirt.png',
-                subtitle: '[SMM] あなたのタイプはどちらですか？',
+                subtitle: 'あなたのタイプはどちらですか？',
                 buttons: [
                     {
                         type: 'postback',
