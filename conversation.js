@@ -2,6 +2,30 @@
 
 const db = require('./db');
 const send = require('./send');
+const exec = require('child_process').exec;
+const crypto = require('crypto');
+
+const md5hex = function (src) {
+    var md5hash = crypto.createHash('md5');
+    md5hash.update(src, 'binary');
+    return md5hash.digest('hex');
+};
+
+const getFilePath = (sender) => {
+    const filename = md5hex(user.id + user.matchedId + user.timestamp);
+    return `./static/${filename}.png`;
+}
+
+const getImageMessage = (filePath) => {
+    return {
+        attachment: {
+            type: "image",
+            payload: {
+                url: `https://voyager.mydns.vc/fbmsgapi/static/${filePath}`
+            }
+        }
+    };
+};
 
 module.exports = (senderId, message) => {
     db.getUser(senderId)
@@ -13,7 +37,7 @@ module.exports = (senderId, message) => {
 
             // 画像等がある場合
             if (!sendText && sendAttachments) {
-                const text = user.type === 'M' ? '画像なんか送りつけてんじゃねえぞこのブタ野郎...' : '画像は勘弁してください...すいません...';
+                const text = user.type === 'M' ? '[SMM] 画像なんか送りつけてんじゃねえぞこのブタ野郎...' : '[SMM] 画像は勘弁してください...すいません...';
                 send(senderId, { text });
                 sendAttachments.forEach(sendAttachment => send(user.matchedId, { attachment: sendAttachment }));
                 return;
@@ -21,14 +45,19 @@ module.exports = (senderId, message) => {
 
             // マッチしていないのに発言した場合
             if (!user.matched) {
-                const text = user.type === 'M' ? 'まだ罵倒してくれるユーザーが見つかっていません...' : 'まだ罵倒されたいブタ野郎が見つかっていませんので、お待ち下さい...';
+                const text = user.type === 'M' ? '[SMM] まだ罵倒してくれるユーザーが見つかっていません...' : '[SMM] まだ罵倒されたいブタ野郎が見つかっていませんので、お待ち下さい...';
                 send(senderId, { text });
                 return;
             }
 
-            // TODO: ここに画像生成処理を書く
-
-            send(user.matchedId, { text: sendText });
-            db.updateCommentTimestamp(senderId);
+            const filePath = getFilePath(user);
+            const cmd = `/home/ubuntu/FBMsgrHackathon/python/image_gen.py ${sendText}, ${user.type}, ${filePath}`;
+            exec(cmd, (err, stdout, stderr) => {
+                if (err) {
+                    console.log(err);
+                }
+                send(user.matchedId, getImageMessage(filePath))
+                    .then(db.updateCommentTimestamp(senderId));
+            });            
         });
 };

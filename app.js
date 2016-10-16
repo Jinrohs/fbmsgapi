@@ -16,6 +16,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/fbmsgapi/static', express.static('static'));
 
 const routeMessage = (event) => {
     if (event.message) {
